@@ -12,16 +12,11 @@ domain=$(cat /etc/xray/domain)
 ISP=$(cat /root/.isp)
 CITY=$(cat /root/.city)
 
-if [[ -z "/etc/slowdns/server.pub" ]] &> /dev/null ; then
-hostslow=""
-else
-hostslow=$(cat /etc/xray/dns)
-fi
-if [[ -z "/etc/slowdns/server.pub" ]] &> /dev/null ; then
-serverpub=""
-else
+touch /etc/slowdns/server.pub
+hostslow=$(cat /etc/slowdns/server.pub)
+
+touch /etc/xray/dns
 serverpub=$(cat /etc/xray/dns)
-fi
 
 if [[ -z "/etc/crme" ]] &> /dev/null ; then
 curl -s https://raw.githubusercontent.com/goldax7/os/main/credit | base64 -d > /etc/crme
@@ -50,7 +45,7 @@ iplimit=$4
 
 # Membuat directory
 mkdir -p /etc/xray/limit/ssh/ip/
-echo "$iplimit" > /etc/xray/limit/ssh/ip/$Login
+echo "$iplimit" > /etc/xray/limit/ssh/ip/$user
 
 hariini=$(date -d "0 days" +"%Y-%m-%d") 
 useradd -e ${exp} -s /bin/false -M $user
