@@ -12,16 +12,11 @@ domain=$(cat /etc/xray/domain)
 ISP=$(cat /root/.isp)
 CITY=$(cat /root/.city)
 
-if [[ -z "/etc/slowdns/server.pub" ]] &> /dev/null ; then
 touch /etc/slowdns/server.pub
-else
-hostslow=$(cat /etc/xray/dns)
-fi
-if [[ -z "/etc/slowdns/server.pub" ]] &> /dev/null ; then
+hostslow=$(cat /etc/slowdns/server.pub)
+
 touch /etc/xray/dns
-else
 serverpub=$(cat /etc/xray/dns)
-fi
 
 if [[ -z "/etc/crme" ]] &> /dev/null ; then
 curl -s https://raw.githubusercontent.com/goldax7/os/main/credit | base64 -d > /etc/crme
