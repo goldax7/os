@@ -13,12 +13,12 @@ ISP=$(cat /root/.isp)
 CITY=$(cat /root/.city)
 
 if [[ -z "/etc/slowdns/server.pub" ]] &> /dev/null ; then
-hostslow=""
+touch /etc/slowdns/server.pub
 else
 hostslow=$(cat /etc/xray/dns)
 fi
 if [[ -z "/etc/slowdns/server.pub" ]] &> /dev/null ; then
-serverpub=""
+touch /etc/xray/dns
 else
 serverpub=$(cat /etc/xray/dns)
 fi
@@ -46,7 +46,7 @@ dropbear=$(cat /etc/port.txt | grep 'dropbear' | awk '{print $4 $5}')
 # Membuat directory
 iplimit=2
 mkdir -p /etc/xray/limit/ssh/ip/
-echo "$iplimit" > /etc/xray/limit/ssh/ip/$Login
+echo "$iplimit" > /etc/xray/limit/ssh/ip/$user
 
 user=trial-`</dev/urandom tr -dc 0-9 | head -c4`
 Pass=1
