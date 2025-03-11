@@ -38,11 +38,6 @@ udp=$(cat /etc/port.txt | grep 'udp-custom' | awk '{print $4}')
 slowdns=$(cat /etc/port.txt | grep 'slowdns' | awk '{print $4}')
 dropbear=$(cat /etc/port.txt | grep 'dropbear' | awk '{print $4 $5}')
 
-# Membuat directory
-iplimit=2
-mkdir -p /etc/xray/limit/ssh/ip/
-echo "$iplimit" > /etc/xray/limit/ssh/ip/$user
-
 user=trial-`</dev/urandom tr -dc 0-9 | head -c4`
 Pass=1
 exp=$(date -d "1 days" +"%Y-%m-%d") 
@@ -52,6 +47,11 @@ expi="$(chage -l $user | grep "Account expires" | awk -F": " '{print $2}')"
 echo -e "$Pass\n$Pass\n"|passwd $user &> /dev/null
 exp="$pup minutes"
 echo "killusr ssh $user" | at now +$pup minutes >/dev/null 2>&1
+
+# Membuat directory
+iplimit=2
+mkdir -p /etc/xray/limit/ssh/ip/
+echo "$iplimit" > /etc/xray/limit/ssh/ip/$user
 
 echo -e "
 ————————————————————————————————————————
@@ -93,4 +93,4 @@ echo -e "
    Created On : $hariini
    Expired On : $exp
 ————————————————————————————————————————"
-/etc/crme
+bash /etc/crme
